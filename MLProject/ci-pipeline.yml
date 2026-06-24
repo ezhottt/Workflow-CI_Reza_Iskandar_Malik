@@ -1,0 +1,12 @@
+- name: Build and Push Model to Docker Hub
+        run: |
+          cd MLProject
+          # Ambil Run ID terbaru
+          RUN_ID=$(ls mlruns/0/ | grep -v meta.yaml | head -n 1)
+          MODEL_PATH="mlruns/0/$RUN_ID/artifacts/model"
+          IMAGE_NAME="${{ secrets.DOCKER_USERNAME }}/sensus-income-model:latest"
+          
+          # Build Docker tanpa nge-cek environment conda yang ribet
+          mlflow models build-docker -m $MODEL_PATH -n $IMAGE_NAME --enable-mlserver
+          
+          docker push $IMAGE_NAME
