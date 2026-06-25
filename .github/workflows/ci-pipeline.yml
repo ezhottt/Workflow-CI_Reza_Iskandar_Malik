@@ -13,14 +13,11 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
-        with:
-          node-version: '24'
 
       - name: Set up Python 3.12
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-          cache: 'pip'
 
       - name: Install Dependencies
         run: |
@@ -42,9 +39,9 @@ jobs:
         run: |
           cd MLProject
           IMAGE_NAME="${{ secrets.DOCKER_USERNAME }}/sensus-income-model:latest"
-
+          
           echo "Building Docker Image..."
           docker build -t $IMAGE_NAME .
-
+          
           echo "Pushing to Docker Hub..."
           docker push $IMAGE_NAME
