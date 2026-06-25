@@ -24,12 +24,9 @@ jobs:
           python -m pip install --upgrade pip
           pip install pandas scikit-learn mlflow==2.19.0
 
-     - name: Train Model via MLProject
+      - name: Train Model via MLProject
         run: |
           cd MLProject
-          unset MLFLOW_RUN_ID || true
-          unset MLFLOW_EXPERIMENT_ID || true
-          unset MLFLOW_EXPERIMENT_NAME || true
           mlflow run . --env-manager local
 
       - name: Login to Docker Hub
